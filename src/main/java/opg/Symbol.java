@@ -34,7 +34,7 @@ public class Symbol {
         return Arrays.asList(nonterminals).contains(value);
     }
 
-    int index() {
+    Integer index() {
         return indexes.get(value);
     }
 
@@ -58,6 +58,9 @@ public class Symbol {
     }
 
     public static Optional<Integer> compare(Symbol s1, Symbol s2) {
-        return Optional.ofNullable(relationMatrix[s1.index()][s2.index()]);
+        var i1 = s1.index();
+        var i2 = s2.index();
+        if (i1 == null || i2 == null) return Optional.empty();
+        return Optional.ofNullable(relationMatrix[i1][i2]);
     }
 }

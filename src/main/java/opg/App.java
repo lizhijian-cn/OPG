@@ -30,8 +30,8 @@ public class App {
         }
         // a simple tokenizer
         List<Symbol> symbols = sb.toString().chars()
+                .filter(i -> !List.of(' ', '\n', '\r', '\t').contains((char) i))
                 .mapToObj(i -> new Symbol((char) i))
-                .filter(i -> i.isNonterminal())
                 .collect(Collectors.toList());
         System.err.println(symbols);
         try {
