@@ -24,19 +24,21 @@ public class App {
         }
         var scanner = new Scanner(input);
         var opg = new OPG();
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            // a simple tokenizer
-            List<Symbol> symbols = line.chars()
-                    .mapToObj(i -> new Symbol((char) i))
-                    .filter(i -> i.isNonterminal())
-                    .collect(Collectors.toList());
-            try {
-                opg.analyze(symbols);
-            } catch (RuntimeException e) {
-                System.err.println(e.getMessage());
-            }
-            System.out.print(opg.getRes());
+        var sb = new StringBuilder();
+        while (scanner.hasNext()) {
+            sb.append(scanner.next());
         }
+        // a simple tokenizer
+        List<Symbol> symbols = sb.toString().chars()
+                .mapToObj(i -> new Symbol((char) i))
+                .filter(i -> i.isNonterminal())
+                .collect(Collectors.toList());
+        System.err.println(symbols);
+        try {
+            opg.analyze(symbols);
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+        }
+        System.out.print(opg.getRes());
     }
 }
