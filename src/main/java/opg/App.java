@@ -36,8 +36,7 @@ public class App {
             } catch (RuntimeException e) {
                 System.err.println(e.getMessage());
             }
-            System.out.println(opg.getRes());
+            System.out.print(opg.getRes());
         }
-        System.out.println("end");
     }
 }
