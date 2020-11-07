@@ -19,15 +19,18 @@ public class OPG {
             Symbol left = findLastNonterminal(symbolStack);
             var cmp = Symbol.compare(left, right);
             if (cmp.isEmpty()) {
-                res.append("R\n");
-                throw new RuntimeException("illegal relation");
+                res.append("E\n");
+                throw new RuntimeException(String.format("no relation between %s and %s", left, right));
             }
             var c = cmp.get();
             if (c == 0) {
                 if (left.equals('#')) {
                     return;
                 }
+                res.append("I)\n");
+                res.append("R\n");
                 symbolStack.remove(left);
+                in.remove();
             } else if (c < 0) {
                 symbolStack.push(in.remove());
                 res.append("I" + right + "\n");
@@ -77,11 +80,15 @@ public class OPG {
     }
 
     Symbol expect(Deque<Symbol> symbols, char v) {
-        if (symbols.isEmpty())
+        if (symbols.isEmpty()) {
+            res.append("RE\n");
             throw new RuntimeException(String.format("expect %c, but get nothing", v));
+        }
         var s = symbols.remove();
-        if (!s.equals(v))
+        if (!s.equals(v)) {
+            res.append("RE\n");
             throw new RuntimeException(String.format("expect %c, but get %s", v, s));
+        }
         return s;
     }
 }
